@@ -159,7 +159,7 @@ Error Response:
 
 If the recipe already exists:
 
-```json
+```bash
 **Response body (JSON):**
 {
 	"error": "Recipe already exists"
@@ -192,7 +192,7 @@ Error Response:
 
 If the recipe doesn't exist:
 
-```json
+```bash
 **Response body (JSON):**
 {
 	"error": "Recipe does not exist"
