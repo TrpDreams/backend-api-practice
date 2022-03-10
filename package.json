@@ -1,0 +1,23 @@
+{
+  "name": "nodeexpresstutorial",
+  "version": "1.0.0",
+  "description": "Practice project for Hatchways backend api assessment",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TrpDreams/backend-api-practice.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TrpDreams/backend-api-practice/issues"
+  },
+  "homepage": "https://github.com/TrpDreams/backend-api-practice#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
