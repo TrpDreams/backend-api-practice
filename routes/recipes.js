@@ -3,6 +3,8 @@ const router = express.Router();
 const fs = require('fs');
 const data = require('../data.json');
 const recipes = data.recipes;
+const Joi = require('joi');
+const { valid, string } = require('joi');
 
 router.get('/', (req, res, next) => {
   // Map the recipe names to recipeNames
@@ -31,7 +33,10 @@ router.post('/', (req, res, next) => {
     ingredients: req.body.ingredients,
     instructions: req.body.instructions,
   };
-
+  const { error } = validateRecipe(recipe);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   // Look for an existing recipe with the same name and return 400 if found
   const recipeExists = recipes.find((r) => r.name === recipe.name);
   if (recipeExists) return res.status(400).json({ error: 'Recipe already exists' });
@@ -48,7 +53,10 @@ router.post('/', (req, res, next) => {
 router.put('/', (req, res, next) => {
   const name = req.body.name;
   const recipe = req.body;
-
+  const { error } = validateRecipe(recipe);
+  if (error) {
+    return res.status(400).send(error.details[0].message);
+  }
   const recipeKey = getRecipeKeyByName(recipes, name);
   if (!recipeKey) return res.status(404).json({ error: 'Recipe does not exist' });
   recipes[recipeKey] = recipe;
@@ -68,4 +76,15 @@ function writeRecipeToJson(recipes) {
     console.log('Writing to data.json');
   });
 }
+
+function validateRecipe(recipe) {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    ingredients: Joi.array().items(Joi.string()),
+    instructions: Joi.array().items(Joi.string()),
+  });
+
+  return schema.validate(recipe);
+}
+
 module.exports = router;
